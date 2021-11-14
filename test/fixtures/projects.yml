@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  url_opensea: MyString
+  url_discord: MyString
+  url_twitter: MyString
+  url_website: MyString
+  description: MyText
+  slug: MyString
+
+two:
+  name: MyString
+  url_opensea: MyString
+  url_discord: MyString
+  url_twitter: MyString
+  url_website: MyString
+  description: MyText
+  slug: MyString
