@@ -85,8 +85,10 @@ async function fetchAccountData() {
   //console.log("Got accounts", accounts);
   selectedAccount = accounts[0];
 
-  if (accounts) {
+  if (selectedAccount) {
+    console.log(accounts);
     document.querySelector("#btn-connect").style.display = "none";
+    document.querySelector(".wallet_info").classList.remove('hidden');
     document.querySelector(".wallet_address").textContent = truncate(selectedAccount, 12);
   }
 
@@ -128,16 +130,19 @@ async function onConnect() {
 
   // Subscribe to accounts change
   provider.on("accountsChanged", (accounts) => {
+    console.log("accountsChanged");
     fetchAccountData();
   });
 
   // Subscribe to chainId change
   provider.on("chainChanged", (chainId) => {
+    console.log("chainChanged");
     fetchAccountData();
   });
 
   // Subscribe to networkId change
   provider.on("networkChanged", (networkId) => {
+    console.log("networkChanged");
     fetchAccountData();
   });
 
@@ -210,3 +215,4 @@ window.addEventListener('turbo:load', async () => {
   //   selection.addEventListener("click", onDisconnect);
   // }
 });
+
