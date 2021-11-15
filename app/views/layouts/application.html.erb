@@ -82,15 +82,20 @@
                 </p>
               </div>
               <nav class="mt-5 px-2 space-y-1">
-                <!-- Current: "bg-blue-800 text-white", Default: "text-white hover:bg-blue-600 hover:bg-opacity-75" -->
-                <a href="#" class="bg-blue-800 text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                <%= link_to(projects_path, class: 'bg-blue-800 text-white group flex items-center px-2 py-2 text-base font-medium rounded-md') do %>
                   <i class="fa-duotone fa-album-collection mr-4 flex-shrink-0 h-6 w-6 text-blue-300"></i>
                   Projects
-                </a>
-                <a href="#" class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                <% end %>
+
+                <%= link_to(updates_path, class: 'text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-base font-medium rounded-md') do %>
                   <i class="fa-duotone fa-bullhorn mr-4 flex-shrink-0 h-6 w-6 text-blue-300"></i>
                   Updates
-                </a>
+                <% end %>
+
+                <%= link_to(new_update_path, class: 'text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-base font-medium rounded-md') do %>
+                  <i class="fa-duotone fa-circle-plus mr-4 flex-shrink-0 h-6 w-6 text-blue-300"></i>
+                  Submit Update
+                <% end %>
               </nav>
             </div>
             <div class="flex-shrink-0 flex border-t border-blue-800 p-4">
@@ -132,17 +137,20 @@
               </div>
               <nav class="mt-5 flex-1 px-2 space-y-1">
                 <!-- Current: "bg-blue-800 text-white", Default: "text-white hover:bg-blue-600 hover:bg-opacity-75" -->
-                <a href="#" class="bg-blue-800 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                  <!-- Heroicon name: outline/users -->
+                <%= link_to(projects_path, class: 'bg-blue-800 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md') do %>
                   <i class="fa-duotone fa-album-collection mr-4 flex-shrink-0 h-6 w-6 text-blue-300"></i>
                   Projects
-                </a>
+                <% end %>
 
-                <a href="#" class="text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                  <!-- Heroicon name: outline/home -->
+                <%= link_to(updates_path, class: 'text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-sm font-medium rounded-md') do %>
                   <i class="fa-duotone fa-bullhorn mr-4 flex-shrink-0 h-6 w-6 text-blue-300"></i>
                   Updates
-                </a>
+                <% end %>
+
+                <%= link_to(new_update_path, class: 'text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-sm font-medium rounded-md') do %>
+                  <i class="fa-duotone fa-circle-plus mr-4 flex-shrink-0 h-6 w-6 text-blue-300"></i>
+                  Submit Update
+                <% end %>
               </nav>
             </div>
             <div class="flex-shrink-0 flex border-t border-blue-800 p-4">
