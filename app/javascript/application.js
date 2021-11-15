@@ -189,21 +189,21 @@ async function onDisconnect() {
 // }
 
 
-window.addEventListener('load', async () => {
+window.addEventListener('turbo:load', async () => {
   init();
 
   if (web3Modal.cachedProvider) {
     await onConnect();
   }
 
-  // var selection = document.querySelector("#btn-connect");
-  // if (selection !== null) {
-  //   selection.addEventListener("click", onConnect);
-  // } else {
-  //   if (web3Modal.cachedProvider) {
-  //     await onConnect();
-  //   }
-  // }
+  var selection = document.querySelector("#btn-connect");
+  if (selection !== null) {
+    selection.addEventListener("click", onConnect);
+  } else {
+    if (web3Modal.cachedProvider) {
+      await onConnect();
+    }
+  }
 
   // var selection = document.querySelector("#btn-disconnect");
   // if (selection !== null) {
