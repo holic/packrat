@@ -189,7 +189,7 @@ async function onDisconnect() {
 // }
 
 
-window.addEventListener('turbo:load', async () => {
+window.addEventListener('load', async () => {
   init();
 
   if (web3Modal.cachedProvider) {
