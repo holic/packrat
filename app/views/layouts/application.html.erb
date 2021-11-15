@@ -17,55 +17,14 @@
   </head>
 
   <body class="h-full">
-      <!-- This example requires Tailwind CSS v2.0+ -->
-      <!--
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-gray-100">
-        <body class="h-full">
-        ```
-      -->
-      <div>
+      <div data-controller="menu">
         <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
-        <div class="fixed inset-0 flex z-40 md:hidden" role="dialog" aria-modal="true">
-          <!--
-            Off-canvas menu overlay, show/hide based on off-canvas menu state.
-
-            Entering: "transition-opacity ease-linear duration-300"
-              From: "opacity-0"
-              To: "opacity-100"
-            Leaving: "transition-opacity ease-linear duration-300"
-              From: "opacity-100"
-              To: "opacity-0"
-          -->
+        <div data-menu-target="toggleable" class="fixed inset-0 flex z-40 hidden" role="dialog" aria-modal="true">
           <div class="fixed inset-0 bg-gray-600 bg-opacity-75" aria-hidden="true"></div>
-
-          <!--
-            Off-canvas menu, show/hide based on off-canvas menu state.
-
-            Entering: "transition ease-in-out duration-300 transform"
-              From: "-translate-x-full"
-              To: "translate-x-0"
-            Leaving: "transition ease-in-out duration-300 transform"
-              From: "translate-x-0"
-              To: "-translate-x-full"
-          -->
           <div class="relative flex-1 flex flex-col max-w-xs w-full bg-blue-700">
-            <!--
-              Close button, show/hide based on off-canvas menu state.
-
-              Entering: "ease-in-out duration-300"
-                From: "opacity-0"
-                To: "opacity-100"
-              Leaving: "ease-in-out duration-300"
-                From: "opacity-100"
-                To: "opacity-0"
-            -->
             <div class="absolute top-0 right-0 -mr-12 pt-2">
-              <button type="button" class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+              <button data-action="click->menu#toggle" type="button" class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                 <span class="sr-only">Close sidebar</span>
-                <!-- Heroicon name: outline/x -->
                 <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -173,9 +132,10 @@
             </div>
           </div>
         </div>
+
         <div class="md:pl-64 flex flex-col flex-1">
           <div class="sticky top-0 z-10 md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3 bg-gray-100">
-            <button type="button" class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+            <button data-action="click->menu#toggle" type="button" class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
               <span class="sr-only">Open sidebar</span>
               <!-- Heroicon name: outline/menu -->
               <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
