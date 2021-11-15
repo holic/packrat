@@ -3,6 +3,22 @@ import "@hotwired/turbo-rails"
 import "controllers"
 
 
+var truncate = function (fullStr, strLen, separator) {
+  if (fullStr.length <= strLen) return fullStr;
+
+  separator = separator || '...';
+
+  var sepLen = separator.length,
+    charsToShow = strLen - sepLen,
+    frontChars = Math.ceil(charsToShow / 2),
+    backChars = Math.floor(charsToShow / 2);
+
+  return fullStr.substr(0, frontChars) +
+    separator +
+    fullStr.substr(fullStr.length - backChars);
+};
+
+
 "use strict";
 
 
@@ -63,19 +79,26 @@ async function fetchAccountData() {
   // Get list of accounts of the connected wallet
   const accounts = await web3.eth.getAccounts();
 
+  //console.log(accounts);
+
   // MetaMask does not give you all accounts, only the selected account
   //console.log("Got accounts", accounts);
   selectedAccount = accounts[0];
 
-  if (getCookie('wallet') == null) {
-    var redirect = true;
+  if (accounts) {
+    document.querySelector("#btn-connect").style.display = "none";
+    document.querySelector(".wallet_address").textContent = truncate(selectedAccount, 12);
   }
 
-  setCookie("wallet", selectedAccount, 365);
+  // if (getCookie('wallet') == null) {
+  //   var redirect = true;
+  // }
 
-  if (redirect == true) {
-    window.location.href = "/";
-  }
+  //setCookie("wallet", selectedAccount, 365);
+
+  // if (redirect == true) {
+  //   window.location.href = "/";
+  // }
 }
 
 
@@ -137,48 +160,53 @@ async function onDisconnect() {
   }
 
   selectedAccount = null;
-  eraseCookie('wallet');
+  //eraseCookie('wallet');
   window.location.href = "/";
 }
 
 
-function setCookie(name, value, days) {
-  var expires = "";
-  if (days) {
-    var date = new Date();
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    expires = "; expires=" + date.toUTCString();
-  }
-  document.cookie = name + "=" + (value || "") + expires + "; path=/";
-}
-function getCookie(name) {
-  var nameEQ = name + "=";
-  var ca = document.cookie.split(';');
-  for (var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-  }
-  return null;
-}
-function eraseCookie(name) {
-  document.cookie = name + '=; Max-Age=-99999999;';
-}
+// function setCookie(name, value, days) {
+//   var expires = "";
+//   if (days) {
+//     var date = new Date();
+//     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+//     expires = "; expires=" + date.toUTCString();
+//   }
+//   document.cookie = name + "=" + (value || "") + expires + "; path=/";
+// }
+// function getCookie(name) {
+//   var nameEQ = name + "=";
+//   var ca = document.cookie.split(';');
+//   for (var i = 0; i < ca.length; i++) {
+//     var c = ca[i];
+//     while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+//     if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+//   }
+//   return null;
+// }
+// function eraseCookie(name) {
+//   document.cookie = name + '=; Max-Age=-99999999;';
+// }
 
-window.addEventListener('load', async () => {
+
+window.addEventListener('turbo:load', async () => {
   init();
 
-  var selection = document.querySelector("#btn-connect");
-  if (selection !== null) {
-    selection.addEventListener("click", onConnect);
-  } else {
-    if (web3Modal.cachedProvider) {
-      await onConnect();
-    }
+  if (web3Modal.cachedProvider) {
+    await onConnect();
   }
 
-  var selection = document.querySelector("#btn-disconnect");
-  if (selection !== null) {
-    selection.addEventListener("click", onDisconnect);
-  }
+  // var selection = document.querySelector("#btn-connect");
+  // if (selection !== null) {
+  //   selection.addEventListener("click", onConnect);
+  // } else {
+  //   if (web3Modal.cachedProvider) {
+  //     await onConnect();
+  //   }
+  // }
+
+  // var selection = document.querySelector("#btn-disconnect");
+  // if (selection !== null) {
+  //   selection.addEventListener("click", onDisconnect);
+  // }
 });
