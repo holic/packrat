@@ -5,4 +5,7 @@ Rails.application.routes.draw do
   resources :updates
 
   root "projects#index"
+
+  post "/session", to: "session#create"
+
 end
