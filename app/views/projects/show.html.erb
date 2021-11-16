@@ -10,10 +10,17 @@
     </div>
     <div>
       <h1 class="text-4xl font-bold text-gray-900 inline-block align-middle"><%= @project.name %></h1>
-      <a href="#" class="inline-block group align-middle text-left bg-gray-200 px-4 py-2 rounded-full hover:bg-red-500 hover:text-white">
-        <i class="fa-duotone fa-circle-heart top-px relative w-5 h-5 text-red-500 align-text-bottom group-hover:text-white"></i>
-        <span class="font-bold">Follow</span>
-      </a>
+      <% if @current_wallet and @current_wallet.follows.where(project: @project).present? %>
+        <%= link_to unfollow_project_path(@project.slug), class: 'inline-block group align-middle text-left bg-red-500 px-4 py-2 rounded-full hover:bg-black hover:text-white' do %>
+          <i class="fa-duotone fa-circle-heart top-px relative w-5 h-5 text-white align-text-bottom group-hover:text-white"></i>
+          <span class="font-bold text-white">Following</span>
+        <% end %>
+      <% else %>
+        <%= link_to follow_project_path(@project.slug), class: 'inline-block group align-middle text-left bg-gray-200 px-4 py-2 rounded-full hover:bg-red-500 hover:text-white' do %>
+          <i class="fa-duotone fa-circle-heart top-px relative w-5 h-5 text-red-500 align-text-bottom group-hover:text-white"></i>
+          <span class="font-bold">Follow</span>
+        <% end %>
+      <% end %>
     </div>
   </div>
   <div class="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3">
