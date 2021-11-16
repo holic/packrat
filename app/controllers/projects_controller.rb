@@ -4,5 +4,6 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    @project = Project.find_by(slug: params[:id])
   end
 end
