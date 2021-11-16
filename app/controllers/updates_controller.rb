@@ -1,6 +1,10 @@
 class UpdatesController < ApplicationController
   def index
-    @updates = Update.all
+    if @current_wallet
+      @updates = Update.where(project_id: @current_wallet.follows.pluck(:project_id))
+    else
+      @updates = Update.all
+    end
   end
 
   def show
