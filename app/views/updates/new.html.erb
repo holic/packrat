@@ -2,7 +2,7 @@
   <h1 class="text-4xl font-bold text-gray-900">Submit an Update</h1>
 </div>
 <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 my-4">
-  <% if @current_wallet.projects.where(id: @current_wallet.permissions.pluck(:project_id)).present? %>
+  <% if @current_wallet.projects.where(id: @current_wallet.permissions.pluck(:project_id)).present? or @current_wallet.admin.present? %>
     <% if @update.errors.any? %>
     <div class="rounded-md bg-red-50 p-4">
       <div class="flex">
@@ -33,7 +33,11 @@
           <div class="sm:col-span-4">
             <%= form.label :project_id, "Project", class: 'block text-lg font-medium text-gray-700' %>
             <div class="mt-1">
+            <% if @current_wallet.admin.present? %>
+              <%= form.collection_select :project_id, Project.all.order(:name), :id, :name, {include_blank: 'Select a project'}, {class: 'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'} %>
+            <% else %>
               <%= form.collection_select :project_id, @current_wallet.projects.where(id: @current_wallet.permissions.pluck(:project_id)).order(:name), :id, :name, {include_blank: 'Select a project'}, {class: 'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'} %>
+            <% end %>
             </div>
           </div>
 
