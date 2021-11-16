@@ -3,7 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Packrat</title>
+    <title><%= content_for?(:title) ? ("#{yield(:title)} - Packrat").html_safe : "Packrat: NFT Project Notifications" %></title>
+    <meta name="title" content="Packrat">
+    <meta name="description" content="<%= content_for?(:description) ? (yield(:description)) : "Packrat is a way for NFT owners to stay up to date on their favorite projects without having to sift through the noise of Discord announcements." %>">
+    <meta name="theme-color" content="#1c4ed8">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <script src="https://kit.fontawesome.com/cb89b4e26e.js" crossorigin="anonymous"></script>
