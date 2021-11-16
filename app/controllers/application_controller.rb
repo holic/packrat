@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_action :current_wallet
 
   def current_wallet
     return unless session[:wallet]
