@@ -116,7 +116,7 @@
                 <% end %>
               </nav>
             </div>
-            <div data-controller="wallet" data-wallet-target="container" class="hidden flex-shrink-0 flex border-t border-blue-800 p-4">
+            <div data-controller="wallet" data-wallet-target="container" data-wallet-wallet-value="<%= session[:wallet] %>" data-wallet-csrf-value="<%= session[:_csrf_token] %>" class="hidden flex-shrink-0 flex border-t border-blue-800 p-4">
               <div class="flex-shrink-0 w-full group block">
                 <div class="flex items-center">
 
