@@ -5,3 +5,6 @@ import { application } from "./application"
 
 import MenuController from "./menu_controller.js"
 application.register("menu", MenuController)
+
+import WalletController from "./wallet_controller.js"
+application.register("wallet", WalletController)
