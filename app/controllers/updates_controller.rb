@@ -4,6 +4,8 @@ class UpdatesController < ApplicationController
   end
 
   def show
+    @project = Project.find_by(slug: params[:project_id])
+    @update = Update.find(params[:id])
   end
 
   def new
