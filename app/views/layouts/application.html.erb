@@ -3,7 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Packrat</title>
+    <title><%= content_for?(:title) ? ("#{yield(:title)} - Packrat").html_safe : "Packrat: NFT Project Notifications" %></title>
+    <meta name="title" content="Packrat">
+    <meta name="description" content="<%= content_for?(:description) ? (yield(:description)) : "Packrat is a way for NFT owners to stay up to date on their favorite projects without having to sift through the noise of Discord announcements." %>">
+    <meta name="theme-color" content="#1c4ed8">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <script src="https://kit.fontawesome.com/cb89b4e26e.js" crossorigin="anonymous"></script>
@@ -51,29 +54,13 @@
                   <i class="fa-duotone fa-bullhorn mr-4 flex-shrink-0 h-6 w-6 text-blue-300"></i>
                   Updates
                 <% end %>
-
+                <% if @current_wallet %>
                 <%= link_to(new_update_path, class: 'text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-base font-medium rounded-md') do %>
                   <i class="fa-duotone fa-circle-plus mr-4 flex-shrink-0 h-6 w-6 text-blue-300"></i>
                   Submit Update
                 <% end %>
+                <% end %>
               </nav>
-            </div>
-            <div class="flex-shrink-0 flex border-t border-blue-800 p-4">
-              <a href="#" class="flex-shrink-0 group block">
-                <div class="flex items-center">
-                  <div>
-                    <img class="inline-block h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-                  </div>
-                  <div class="ml-3">
-                    <p class="text-base font-medium text-white">
-                      Tom Cook
-                    </p>
-                    <p class="text-sm font-medium text-blue-200 group-hover:text-white">
-                      View profile
-                    </p>
-                  </div>
-                </div>
-              </a>
             </div>
           </div>
 
@@ -107,9 +94,11 @@
                   Updates
                 <% end %>
 
+                <% if @current_wallet %>
                 <%= link_to(new_update_path, class: 'text-white hover:bg-blue-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-sm font-medium rounded-md') do %>
                   <i class="fa-duotone fa-circle-plus mr-4 flex-shrink-0 h-6 w-6 text-blue-300"></i>
                   Submit Update
+                <% end %>
                 <% end %>
               </nav>
             </div>
@@ -138,7 +127,6 @@
           <div class="sticky top-0 z-10 md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3 bg-gray-100">
             <button data-action="click->menu#toggle" type="button" class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
               <span class="sr-only">Open sidebar</span>
-              <!-- Heroicon name: outline/menu -->
               <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
               </svg>

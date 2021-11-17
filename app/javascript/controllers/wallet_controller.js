@@ -20,12 +20,24 @@ export default class extends Controller {
     this.element.innerText = LOGIN_BUTTON_TEXT;
   }
 
-  walletValueChanged() {
-    console.log('wallet changed to', this.walletValue)
+  async walletValueChanged() {
+    console.log('wallet changed to', this.walletValue);
     if (this.walletValue) {
       this.connectButtonTarget.classList.add('hidden');
       this.walletTarget.classList.remove('hidden');
-      this.walletAddressTarget.innerText = this.walletValue;
+
+      // TODO: clean this up
+      const address = this.walletValue;
+      this.walletAddressTarget.innerText = address;
+
+      if (web3Modal.cachedProvider) {
+        const web3ModalProvider = await web3Modal.connect();
+        const provider = new ethers.providers.Web3Provider(web3ModalProvider);
+        const ensName = await provider.lookupAddress(address);
+        if (ensName) {
+          this.walletAddressTarget.innerText = ensName;
+        }
+      }
     }
     else {
       this.walletTarget.classList.add('hidden');

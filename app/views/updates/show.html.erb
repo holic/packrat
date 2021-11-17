@@ -1,4 +1,124 @@
-<div>
-  <h1 class="text-xl font-bold">Updates#show</h1>
-  <p>Find me in app/views/updates/show.html.erb</p>
-<div>
+<% title "#{@update.title} - #{@project.name}" %>
+
+<div class="max-w-3xl mx-auto px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
+  <div class="flex items-center space-x-5">
+    <div class="flex-shrink-0">
+      <%= link_to project_path(@project.slug), class: 'relative' do %>
+        <%= image_tag @project.image_avatar_url, class: 'h-16 w-16 rounded-full' %>
+        <span class="absolute inset-0 shadow-inner rounded-full" aria-hidden="true"></span>
+      <% end %>
+    </div>
+    <div>
+      <%= link_to project_path(@project.slug) do %>
+      <h1 class="text-4xl font-bold text-gray-900"><%= @project.name %></h1>
+      <% end %>
+    </div>
+  </div>
+  <div class="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3">
+    <div class="flex my-2">
+      <% if @project.url_opensea.present? %>
+        <%= link_to @project.url_opensea do %>
+        <i class="fa-duotone fa-sailboat h-5 w-5 bg-gray-300 p-2 text-white rounded-lg mx-1 hover:bg-blue-600"></i>
+        <% end %>
+      <% end %>
+
+      <% if @project.url_discord.present? %>
+        <%= link_to @project.url_discord do %>
+        <i class="fa-brands fa-discord h-5 w-5 bg-gray-300 p-2 text-white rounded-lg mx-1 hover:bg-indigo-500"></i>
+        <% end %>
+      <% end %>
+
+      <% if @project.url_twitter.present? %>
+        <%= link_to @project.url_twitter do %>
+        <i class="fa-brands fa-twitter h-5 w-5 bg-gray-300 p-2 text-white rounded-lg mx-1 hover:bg-blue-400"></i>
+        <% end %>
+      <% end %>
+
+      <% if @project.url_website.present? %>
+        <%= link_to @project.url_website do %>
+        <i class="fa-duotone fa-browser h-5 w-5 bg-gray-300 p-2 text-white rounded-lg mx-1 hover:bg-green-500"></i>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="mt-8 max-w-3xl mx-auto grid grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
+  <div class="space-y-6 lg:col-start-1 lg:col-span-2">
+    <section>
+      <div class="bg-white shadow sm:rounded-lg">
+        <div class="px-4 py-5 sm:px-6 flex justify-between">
+          <h2 class="text-3xl leading-5 font-bold text-gray-900 inline-flex">
+            <%= @update.title %>
+          </h2> 
+          <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800 align-top">
+            <%= @update.category %>
+          </span>
+        </div>
+        <div class="border-t border-gray-200 px-12 py-6 sm:px-6">
+          <div class="mt-0 grid gap-16">
+            <div>
+              <div class="block mt-2">
+                <p class="text-base text-gray-500">
+                  <%= @update.body %>
+                </p>
+              </div>
+              <div class="mt-4 flex items-center justify-between">
+                <div class="flex items-center">
+                  <div class="flex text-lg font-bold text-gray-500">
+                    <time>
+                      <%= @update.publish_at.strftime("%a, %b %e, %Y at %l:%M%p") %>
+                    </time>
+                  </div>
+                </div>
+                <% if @current_wallet and (@current_wallet.managed_projects.where(id: @update.project.id).present? or @current_wallet.admin.present?) %>
+                  <div class="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3">
+                    <%= link_to "Edit", edit_update_path(@update), class: 'inline-flex items-center justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500' %>
+
+                    <%= button_to "Delete", update_path(@update), method: :delete, data: {confirm: "Are you sure you want to delete this update?" }, class: 'inline-flex items-center justify-center px-4 py-2 border border-red-800 shadow-sm text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-600 hover:border-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-red-800' %>
+                  </div>
+                <% end %>
+                
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section aria-labelledby="timeline-title" class="lg:col-start-3 lg:col-span-1">
+    <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:px-6">
+      <h2 id="timeline-title" class="text-xl font-medium text-gray-900">Team</h2>
+
+      <div class="mt-2 flow-root">
+        <ul role="list" class="divide-y divide-gray-200">
+        <% @project.wallets.each do |wallet| %>
+          <li class="py-4">
+            <div class="flex items-center space-x-4">
+              <div class="flex-shrink-0">
+                <div class="h-10 w-10 rounded-full bg-blue-500"></div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-gray-900 truncate">
+                  ...
+                </p>
+                <p class="text-sm text-gray-500 truncate">
+                  <%= wallet.address.truncate(12, omission: "...#{wallet.address.last(4)}") %>
+                </p>
+              </div>
+              <div>
+                <p class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                  Owner
+                </p>
+              </div>
+            </div>
+          </li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
