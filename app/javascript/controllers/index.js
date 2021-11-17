@@ -3,6 +3,9 @@
 
 import { application } from "./application"
 
+import AddressController from "./address_controller.js"
+application.register("address", AddressController)
+
 import MenuController from "./menu_controller.js"
 application.register("menu", MenuController)
 

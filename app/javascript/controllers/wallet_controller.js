@@ -3,20 +3,21 @@ import { Controller } from "@hotwired/stimulus"
 const { ethers } = window.ethers;
 const Web3Modal = window.Web3Modal.default;
 
-const providerOptions = {
-  /* See Provider Options Section */
-};
-
 const web3Modal = new Web3Modal({
   network: "mainnet",
   cacheProvider: true,
-  providerOptions
 });
 
+const LOGIN_BUTTON_TEXT = 'Log in';
 
 export default class extends Controller {
-  static targets = ['container', 'connectButton', 'wallet', 'walletAddress'];
-  static values = { wallet: { type: String, default: localStorage.getItem('wallet') || '' } };
+  static values = {
+    csrf: String,
+  }
+
+  swapLoginButton() {
+    this.element.innerText = LOGIN_BUTTON_TEXT;
+  }
 
   walletValueChanged() {
     console.log('wallet changed to', this.walletValue)
@@ -34,21 +35,50 @@ export default class extends Controller {
   async connect() {
     // If we have a cached provider (wallet connected before), connect to it now before we reveal the wallet section
     if (web3Modal.cachedProvider) {
-      await this.connectWallet();
+      this.swapLoginButton();
     }
-
-    this.containerTarget.classList.remove('hidden');
   }
 
   async connectWallet() {
     const web3ModalProvider = await web3Modal.connect();
-    // TODO: listen to provider events
 
+    if (this.element.innerText === LOGIN_BUTTON_TEXT) {
+      await this.login(web3ModalProvider);
+      return;
+    }
+
+    // TODO: listen to provider events
+    this.swapLoginButton();
+  }
+
+  async login(web3ModalProvider) {
     const provider = new ethers.providers.Web3Provider(web3ModalProvider);
     const signer = provider.getSigner();
     const address = await signer.getAddress();
-    const ensName = await provider.lookupAddress(address);
+
+    const message = `To log in to Packrat, we need to verify that you are the owner of this wallet. Sign this message to log in! You'll only have to do this once per day.\n\n\n${this.csrfValue}`;
+    const signature = await signer.signMessage(message);
+
+    const formData = new FormData();
+    formData.set('message', message);
+    formData.set('signature', signature);
+
+    const json = await fetch('/session', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'X-CSRF-Token': this.csrfValue,
+        },
+        body: formData,
+      })
+      .then((res) => res.json());
+
+    console.log('created session', json);
     
-    this.walletValue = ensName || address;
+    if (address === json.address) {
+      window.location.reload();
+    } else {
+      alert('Oops, could not log you in.');
+    }
   }
 }
