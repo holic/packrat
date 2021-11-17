@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { ensNameOrAddress } from '../ens';
 
 const { ethers } = window.ethers;
 const Web3Modal = window.Web3Modal.default;
@@ -55,6 +56,9 @@ export default class extends Controller {
     const provider = new ethers.providers.Web3Provider(web3ModalProvider);
     const signer = provider.getSigner();
     const address = await signer.getAddress();
+
+    // prime cache
+    ensNameOrAddress(address);
 
     const message = `To log in to Packrat, we need to verify that you are the owner of this wallet. Sign this message to log in! You'll only have to do this once per day.\n\n\n${this.csrfValue}`;
     const signature = await signer.signMessage(message);
