@@ -105,11 +105,11 @@
             <div class="flex-shrink-0 flex border-t border-blue-800 p-4">
               <div class="flex-shrink-0 w-full group block">
                 <div class="flex items-center">
-                  <% if session[:wallet] %>
+                  <% if @current_wallet %>
                     <div class="flex items-center gap-3">
                       <div class="h-9 w-9 rounded-full bg-white"></div>
                       <p class="text-lg font-medium text-white">
-                        <%= render partial: "shared/address", locals: {address: session[:wallet]} %>
+                        <%= render partial: "shared/address", locals: {address: @current_wallet.address} %>
                       </p>
                     </div>
                   <% else %>

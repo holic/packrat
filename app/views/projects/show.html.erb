@@ -118,7 +118,7 @@
                   ...
                 </p>
                 <p class="text-sm text-gray-500 truncate">
-                  <%= wallet.address.truncate(12, omission: "...#{wallet.address.last(4)}") %>
+                  <%= render partial: "shared/address", locals: {address: wallet.address} %>
                 </p>
               </div>
               <div>
